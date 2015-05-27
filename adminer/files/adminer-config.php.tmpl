@@ -1,0 +1,122 @@
+<?php
+
+
+function adminer_object() {
+
+		// required to run any plugin
+	include_once "./adminer-plugins.php";
+
+		// autoloader
+	foreach (glob("plugins/*.php") as $filename) {
+		include_once "./$filename";
+	}
+
+	$plugins = array(
+			// specify enabled plugins here
+//		new AdminerFrames,
+	);
+
+	class AdminerSoftware extends AdminerPlugin {
+
+		/**
+		 * Custom name in title and heading
+		 *
+		 * @return string
+		 */
+		function name() {
+			return '{{ configuration.db_name }}';
+		}
+
+		/**
+		 * Key used for permanent login
+		 *
+		 * @return string
+		 */
+		function permanentLogin() {
+			return "74b941992ef29727ccabf82889fe837a";
+		}
+
+
+    function credentials() {
+      // server, username and password for connecting to database
+      return array('localhost', '{{ configuration.db_user') }}', '{{ configuration.db_pass') }}');
+    }
+
+    function database() {
+      // database name, will be escaped by Adminer
+      return '{{ configuration.db_name }}';
+    }
+
+
+
+
+		/**
+		 * disable login form
+		 */
+		function loginForm() {
+		}
+
+		/**
+		 * Prints table list in menu
+		 *
+		 * @param array $tables
+		 * @return null
+		 */
+
+		/**
+		* function tablesPrint($tables) {
+		* 	echo '<p id="tables">' . "\n";
+		* 	foreach ($tables as $table => $type) {
+		* 		echo '<span class="tables-line';
+		* 		if ($_GET["select"] == $table or $_GET["table"] == $table) {
+		* 			echo '-active';
+		* 		}
+		* 		echo '">';
+		* 		echo '<a href="' . h(ME) . 'select=' . urlencode($table) . '"' . bold($_GET["select"] == $table) . ">" .
+		* 			lang('select') . "</a> ";
+		* 		echo '<a href="' . h(ME) . 'table=' . urlencode($table) . '"' . bold($_GET["table"] == $table) . ">" .
+		* 			$this->tableName(array('Name' => $table)) .
+		* 			"</a></span>\n"; //! Adminer::tableName may work with full table status
+		* 	}
+		* 	echo '</p>';
+		*
+		* /
+
+		/**
+		 * Print homepage
+		 *
+		 * @return bool whether to print default homepage
+		 */
+
+		/** function homepage() {
+* 	echo '<p class="tabs">' . ($_GET["ns"] == "" ? '<a href="' . h(ME) . 'database=">' . lang('Alter database') . "</a>\n" : "");
+* 	if (support("scheme")) {
+* 		echo"<a href='" . h(ME) . "scheme='>" . ($_GET["ns"] != "" ? lang('Alter schema') : lang('Create schema')) .
+* 			"</a>\n";
+* 	}
+* 	return true;
+*
+		*/
+
+
+	}
+
+	return new AdminerSoftware($plugins);
+}
+
+$session_name = 'adminer';
+session_name($session_name);
+session_start();
+
+include "./adminer-4.2.1-mysql.php";
+?>
+
+
+
+
+
+
+
+
+
+
