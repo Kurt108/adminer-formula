@@ -39,12 +39,12 @@ function adminer_object() {
 
     function credentials() {
       // server, username and password for connecting to database
-      return array('localhost', '{{ configuration.db_user }}', '{{ configuration.db_pass }}');
+      return array('localhost', '{{ adminer.db_user }}', '{{ adminer.db_pass }}');
     }
 
     function database() {
       // database name, will be escaped by Adminer
-      return '{{ configuration.db_name }}';
+      return '{{ adminer.db_name }}';
     }
 
 

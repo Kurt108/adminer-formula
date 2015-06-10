@@ -1,0 +1,11 @@
+{% set adminer = salt['grains.filter_by']({
+    'default': {
+        'base_dst': '/var/www/adminer',
+        'user': 'www-data',
+        'db_host': '127.0.0.1',
+        'db_name': 'db',
+        'db_user': 'username',
+        'db_pass': 'better_change',
+    },
+}, merge=salt['pillar.get']('adminer:lookup')) %}
+

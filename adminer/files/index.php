@@ -1,0 +1,1 @@
+<a href="adminer.php?username=bogus">open adminer</a>
