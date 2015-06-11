@@ -53,6 +53,6 @@ adminer.php:
 adminer.sql.gz:
   file.symlink:
     - name: {{ adminer.base_dst }}/adminer.sql.gz
-    - target: {{ adminer.base_dst }}/{{ salt['pillar.get']('adminer:lookup:adminer_sql_import', 'adminer.sql.gz') }}
+    - target: {{ salt['pillar.get']('adminer:lookup:adminer_sql_import', 'adminer.sql.gz') }}
     - require:
       - file: {{ adminer.base_dst }}
