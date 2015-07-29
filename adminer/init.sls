@@ -50,10 +50,10 @@ adminer.php:
     - require:
       - file: {{ adminer.base_dst }}
 
-adminer.sql.gz:
-  file.symlink:
-    - name: {{ adminer.base_dst }}/adminer.sql.gz
-    - source: {{ salt['pillar.get']('adminer:lookup:adminer_sql_import', 'adminer.sql.gz') }}
+adminer.sql:
+  file.copy:
+    - name: {{ adminer.base_dst }}/adminer.sql
+    - source: {{ salt['pillar.get']('adminer:lookup:adminer_sql_import', 'adminer.sql') }}
     - force: true
     - user: {{ adminer.user }}
     - require:
