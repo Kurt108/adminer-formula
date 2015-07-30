@@ -30,7 +30,7 @@ adminer-4.2.1-mysql.php:
     - require:
       - file: {{ adminer.base_dst }}
 
-{{ conf_state_id }}-adminer-plugins.php:
+adminer-plugins.php:
   file.managed:
     - name: {{ adminer.base_dst }}/adminer-plugins.php
     - source: salt://adminer/files/adminer-plugins.php
