@@ -38,7 +38,7 @@ adminer-plugins.php:
     - require:
       - file: {{ adminer.base_dst }}
 
-{% for vhost, settings in adminer.managed.items() %}
+{% for vhost, settings in adminer.connections.managed.items() %}
 
 {% set conf_state_id = 'adminer_conf_' ~ loop.index0 %}
 
