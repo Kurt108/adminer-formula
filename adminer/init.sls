@@ -1,4 +1,4 @@
-{% from "adminer/map.jinja" import adminer with context %}
+{% from "adminer/map.jinja" import adminer, sls_block with context %}
 
 include:
   - nginx.ng.config
@@ -22,7 +22,6 @@ index.php:
     - require:
       - file: {{ adminer.base_dst }}
 
-
 adminer-4.2.1-mysql.php:
   file.managed:
     - name: {{ adminer.base_dst }}/adminer-4.2.1-mysql.php
@@ -31,7 +30,7 @@ adminer-4.2.1-mysql.php:
     - require:
       - file: {{ adminer.base_dst }}
 
-adminer-plugins.php:
+{{ conf_state_id }}-adminer-plugins.php:
   file.managed:
     - name: {{ adminer.base_dst }}/adminer-plugins.php
     - source: salt://adminer/files/adminer-plugins.php
@@ -39,18 +38,24 @@ adminer-plugins.php:
     - require:
       - file: {{ adminer.base_dst }}
 
-adminer.php:
+{% for vhost, settings in adminer.managed.items() %}
+
+{% set conf_state_id = 'adminer_conf_' ~ loop.index0 %}
+
+
+{{ conf_state_id }}-adminer.php:
   file.managed:
     - name: {{ adminer.base_dst }}/adminer.php
     - source: salt://adminer/files/adminer-config.php.tmpl
     - user: {{ adminer.user }}
     - template: jinja
     - context:
-        adminer: {{ adminer }}
+        adminer: {{ settings.config }}
     - require:
       - file: {{ adminer.base_dst }}
 
-adminer.sql:
+
+{{ conf_state_id }}-adminer.sql:
   file.copy:
     - name: {{ adminer.base_dst }}/adminer.sql
     - source: {{ salt['pillar.get']('adminer:lookup:adminer_sql_import', 'adminer.sql') }}
@@ -58,3 +63,6 @@ adminer.sql:
     - user: {{ adminer.user }}
     - require:
       - file: {{ adminer.base_dst }}
+
+
+{% endfor %}
