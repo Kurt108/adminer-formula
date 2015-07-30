@@ -5,6 +5,11 @@
 {% endmacro %}
 
 {% set adminer = salt['pillar.get']('adminer', {
+    'lookup': salt['grains.filter_by']({
+        'Debian': {
+            'base_dst': '/var/www/adminer',
+            'user': 'www-data',
+        }, default='Debian' ),
     'connections': {
         'managed': {},
     },
