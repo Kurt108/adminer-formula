@@ -24,7 +24,7 @@ function adminer_object() {
 		 * @return string
 		 */
 		function name() {
-			return '{{ adminer.db_name }} as user {{ adminer.db_user }}';
+			return '{{ key['db_name'] }} as user {{ key['db_user }}';
 		}
 
 		/**
@@ -39,12 +39,12 @@ function adminer_object() {
 
     function credentials() {
       // server, username and password for connecting to database
-      return array('localhost', '{{ adminer.db_user }}', '{{ adminer.db_pass }}');
+      return array('localhost', '{{ key['db_user }}', '{{ key['db_pass }}');
     }
 
     function database() {
       // database name, will be escaped by Adminer
-      return '{{ adminer.db_name }}';
+      return '{{ key['db_name }}';
     }
 
 
