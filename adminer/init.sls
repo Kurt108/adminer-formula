@@ -18,8 +18,6 @@
     - user: {{ adminer.user }}
     - source: salt://adminer/files/adminer-config.php.tmpl
     - template: jinja
-    - context:
-        adminer: {{ identifier|json() }}
       {%- endif %}
 {%- endmacro -%}
 
