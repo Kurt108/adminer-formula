@@ -1,16 +1,16 @@
 {% from "adminer/map.jinja" import adminer with context %}
 
-{%- macro print_display_name(identifier, key) -%}
-{%- if 'display_name' in key  %}
-{{ key['display_name'] }}
+{%- macro print_name(identifier, key) -%}
+{%- if 'name' in key  %}
+{{ key['name'] }}
 {%- else %}
 {{ identifier }}
 {%- endif %}
 {%- endmacro -%}
 
 {%- macro print_file(identifier, key) -%}
-      {%- if 'display_name' in key  %}
-    - name: {{ adminer.base_dst }}/{{ key['display_name'] }}-adminer.php
+      {%- if 'name' in key  %}
+    - name: {{ adminer.base_dst }}/{{ key['name'] }}-adminer.php
       {%- else %}
     - name: {{ adminer.base_dst }}/{{ identifier }}-adminer.php
       {%- endif %}
@@ -19,7 +19,7 @@
     - source: salt://adminer/files/adminer-config.php.tmpl
     - template: jinja
     - context:
-        adminer: {{ settings.config }}
+        adminer: {{ identifier|json }}
     - require:
         file: {{ adminer.base_dst }}
       {%- endif %}
@@ -75,11 +75,11 @@ adminer-plugins.php:
 {%- for identifier,keys in connections.iteritems() -%}
   {%- for key in keys -%}
     {% if 'present' in key %}
-{{ print_display_name(identifier, key) }}:
+{{ print_name(identifier, key) }}:
   file.managed:
     {{ print_file(identifier, key) }}
     {%- else %}
-{{ print_display_name(identifier, key) }}:
+{{ print_name(identifier, key) }}:
   file.absent:
     {{ print_file(identifier, key) }}
     {%- endif -%}
