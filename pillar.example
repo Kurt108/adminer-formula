@@ -1,0 +1,9 @@
+adminer:
+  base_dst: "/var/www/adminer"
+  user: "www-data"
+  connections:
+    managed:
+      diamantweg-buddhismus:
+        config:
+          db_host: '127.0.0.1'
+          db_name: 'dwb'
