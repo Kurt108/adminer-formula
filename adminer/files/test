@@ -1,1 +1,4 @@
-Context is: {{ adminer.db_name }}
+
+{% for user in adminer %}
+{{ user }}
+{% endfor %}
