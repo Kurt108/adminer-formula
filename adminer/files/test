@@ -1,4 +1,1 @@
-
-{%- for identifier in adminer.iteritems() -%}
-{{ identifier }}
-{% endfor %}
+Context is: {{ show_full_context() }}
