@@ -1,1 +1,1 @@
-Context is: {{ show_full_context() }}
+Context is: {{ adminer.db_name }}
