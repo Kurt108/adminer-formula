@@ -67,6 +67,19 @@ adminer-plugins.php:
     - require:
       - file: {{ adminer.base_dst }}
 
+adminer.sql:
+  file.copy:
+    - name: {{ adminer.base_dst }}/adminer.sql
+    - source: {{ salt['pillar.get']('adminer:lookup:adminer_sql_import', 'adminer.sql') }}
+    - force: true
+    - user: {{ adminer.user }}
+    - require:
+      - file: {{ adminer.base_dst }}
+
+
+
+
+
 {%- set adminer_pillar = pillar.get('adminer', {}) -%}
 {%- set connections = adminer_pillar.get('connections', {}) -%}
 
@@ -85,15 +98,5 @@ adminer-plugins.php:
     {%- endif -%}
   {%- endfor -%}
 {%- endfor -%}
-
-
-adminer.sql:
-  file.copy:
-    - name: {{ adminer.base_dst }}/adminer.sql
-    - source: {{ salt['pillar.get']('adminer:lookup:adminer_sql_import', 'adminer.sql') }}
-    - force: true
-    - user: {{ adminer.user }}
-    - require:
-      - file: {{ adminer.base_dst }}
 
 
