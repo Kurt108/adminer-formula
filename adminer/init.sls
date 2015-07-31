@@ -38,6 +38,12 @@ adminer-plugins.php:
     - require:
       - file: {{ adminer.base_dst }}
 
+{% macro vhost_curpath(vhost) -%}
+  {{ vhost_path(vhost, nginx.vhosts.managed.get(vhost).get('available')) }}
+{%- endmacro %}
+
+
+
 {% for vhost, settings in adminer.connections.managed.items() %}
 
 {% set conf_state_id = 'adminer_conf_' ~ loop.index0 %}
