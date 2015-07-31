@@ -20,8 +20,6 @@
     - template: jinja
     - context:
         adminer: {{ identifier|json() }}
-    - require:
-        - file: {{ adminer.base_dst }}
       {%- endif %}
 {%- endmacro -%}
 
@@ -78,6 +76,8 @@ adminer-plugins.php:
 {{ print_name(identifier, key) }}:
   file.managed:
     {{ print_file(identifier, key) }}
+    - require:
+        - file: {{ adminer.base_dst }}
     {%- else %}
 {{ print_name(identifier, key) }}:
   file.absent:
