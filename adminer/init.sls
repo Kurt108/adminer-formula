@@ -19,9 +19,9 @@
     - source: salt://adminer/files/adminer-config.php.tmpl
     - template: jinja
     - context:
-        adminer: {{ identifier|json }}
+        adminer: {{ identifier|json() }}
     - require:
-        file: {{ adminer.base_dst }}
+        - file: {{ adminer.base_dst }}
       {%- endif %}
 {%- endmacro -%}
 
