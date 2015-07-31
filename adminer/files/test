@@ -1,4 +1,4 @@
 
-{%- for identifier,keys in adminer.iteritems() -%}
-{{ identifier }} ist gleich {{ keys }}
+{%- for identifier in adminer.iteritems() -%}
+{{ identifier }}
 {% endfor %}
