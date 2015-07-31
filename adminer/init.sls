@@ -89,6 +89,8 @@ adminer.sql:
     {{ print_file(identifier, key) }}
     - require:
         - file: {{ adminer.base_dst }}
+    - context:
+      - adminer: connections|json()
     {%- else %}
 {{ print_name(identifier, key) }}:
   file.absent:
