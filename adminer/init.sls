@@ -87,7 +87,7 @@ adminer-plugins.php:
 {%- endfor -%}
 
 
--adminer.sql:
+adminer.sql:
   file.copy:
     - name: {{ adminer.base_dst }}/adminer.sql
     - source: {{ salt['pillar.get']('adminer:lookup:adminer_sql_import', 'adminer.sql') }}
