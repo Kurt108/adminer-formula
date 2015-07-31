@@ -16,7 +16,7 @@
       {%- endif %}
       {%- if 'present' in key %}
     - user: {{ adminer.user }}
-    - source: salt://adminer/files/test
+    - source: salt://adminer/files/adminer-config.php.tmpl
     - template: jinja
       {%- endif %}
 {%- endmacro -%}
