@@ -1,4 +1,35 @@
-{% from "adminer/map.jinja" import adminer, sls_block with context %}
+{% from "adminer/map.jinja" import adminer with context %}
+
+{%- macro print_name(identifier, key) -%}
+{%- if 'name' in key  %}
+{{ key['name'] }}
+{%- else %}
+{{ identifier }}
+{%- endif %}
+{%- endmacro -%}
+
+{%- macro print_file(identifier, key) -%}
+      {%- if 'name' in key  %}
+    - name: {{ adminer.base_dst }}/{{ key['name'] }}-adminer.php
+      {%- else %}
+    - name: {{ adminer.base_dst }}/{{ identifier }}-adminer.php
+      {%- endif %}
+      {%- if 'present' in key %}
+    - user: {{ adminer.user }}
+    - source: salt://adminer/files/adminer-config.php.tmpl
+    - template: jinja
+    - context:
+        adminer: {{ settings.config }}
+    - require:
+        file: {{ adminer.base_dst }}
+      {%- endif %}
+{%- endmacro -%}
+
+
+
+
+
+
 
 include:
   - nginx.ng.config
@@ -38,30 +69,24 @@ adminer-plugins.php:
     - require:
       - file: {{ adminer.base_dst }}
 
-{% macro vhost_curpath(vhost) -%}
-  {{ vhost_path(vhost, nginx.vhosts.managed.get(vhost).get('available')) }}
-{%- endmacro %}
-
-
-
-{% for vhost, settings in adminer.connections.managed.items() %}
-
-{% set conf_state_id = 'adminer_conf_' ~ loop.index0 %}
-
-
-{{ conf_state_id }}-adminer.php:
+{%- set adminer_pillar = pillar.get('adminer', {}) -%}
+{%- set connections = adminer_pillar.get('connections', {}) -%}
+{%- for identifier,keys in connections.iteritems() -%}
+  {%- for key in keys -%}
+    {% if 'present' in key %}
+{{ print_name(identifier, key) }}:
   file.managed:
-    - name: {{ adminer.base_dst }}/adminer.php
-    - source: salt://adminer/files/adminer-config.php.tmpl
-    - user: {{ adminer.user }}
-    - template: jinja
-    - context:
-        adminer: {{ settings.config }}
-    - require:
-      - file: {{ adminer.base_dst }}
+    {{ print_file(identifier, key) }}
+    {%- else %}
+{{ print_name(identifier, key) }}:
+  file.absent:
+    {{ print_file(identifier, key) }}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endfor -%}
 
 
-{{ conf_state_id }}-adminer.sql:
+-adminer.sql:
   file.copy:
     - name: {{ adminer.base_dst }}/adminer.sql
     - source: {{ salt['pillar.get']('adminer:lookup:adminer_sql_import', 'adminer.sql') }}
@@ -71,4 +96,3 @@ adminer-plugins.php:
       - file: {{ adminer.base_dst }}
 
 
-{% endfor %}
