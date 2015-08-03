@@ -1,4 +1,4 @@
-{% from "adminer/map.jinja" import adminer with context %}
+{% from "adminer/map.jinja" import defaults with context %}
 
 {%- macro print_name(identifier, key) -%}
 {%- if 'name' in key  %}
@@ -35,36 +35,36 @@ include:
 
 
 
-{{ adminer.base_dst }}:
+{{ defaults.base_dst }}:
   file.directory:
-    - name: {{ adminer.base_dst }}/
-    - user: {{ adminer.user }}
+    - name: {{ defaults.base_dst }}/
+    - user: {{ defaultsuser }}
 
 
 adminer-4.2.1-mysql.php:
   file.managed:
-    - name: {{ adminer.base_dst }}/adminer-4.2.1-mysql.php
+    - name: {{ defaults.base_dst }}/adminer-4.2.1-mysql.php
     - source: salt://adminer/files/adminer-4.2.1-mysql.php
-    - user: {{ adminer.user }}
+    - user: {{ defaults.user }}
     - require:
-      - file: {{ adminer.base_dst }}
+      - file: {{ defaults.base_dst }}
 
 adminer-plugins.php:
   file.managed:
-    - name: {{ adminer.base_dst }}/adminer-plugins.php
+    - name: {{ defaults.base_dst }}/adminer-plugins.php
     - source: salt://adminer/files/adminer-plugins.php
-    - user: {{ adminer.user }}
+    - user: {{ defaults.user }}
     - require:
-      - file: {{ adminer.base_dst }}
+      - file: {{ defaults.base_dst }}
 
 adminer.sql:
   file.copy:
-    - name: {{ adminer.base_dst }}/adminer.sql
+    - name: {{ defaults.base_dst }}/adminer.sql
     - source: {{ salt['pillar.get']('adminer:lookup:adminer_sql_import', 'adminer.sql') }}
     - force: true
-    - user: {{ adminer.user }}
+    - user: {{ defaults.user }}
     - require:
-      - file: {{ adminer.base_dst }}
+      - file: {{ defaults.base_dst }}
 
 
 
