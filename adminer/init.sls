@@ -10,16 +10,16 @@
 
 {%- macro print_file(identifier, key) -%}
       {%- if 'name' in key  %}
-    - name: {{ defaults.base_dst }}/{{ key['name'] }}-adminer.php
+    - name: {{ key['name'] }}-adminer.php
       {%- else %}
-    - name: {{ defaults.base_dst }}/{{ identifier }}-adminer.php
+    - name: {{ identifier }}-adminer.php
       {%- endif %}
       {%- if 'present' in key %}
     - user: {{ defaults.user }}
     - source: salt://adminer/files/adminer-config.php.tmpl
     - template: jinja
     - require:
-      - file: {{ defaults.base_dst }}/{{ print_file(identifier, key) }}
+      - file: {{ defaults.base_dst }}
       {%- endif %}
 {%- endmacro -%}
 
