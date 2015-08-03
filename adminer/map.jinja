@@ -1,4 +1,4 @@
-{% set adminer = salt['pillar.get']('adminer', {
+{% set defaults = salt['pillar.get']('adminer', {
     'base_dst': '/var/www/adminer',
     'user': 'www-data',
     'connections': {},
