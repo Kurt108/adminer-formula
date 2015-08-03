@@ -70,8 +70,8 @@ adminer.sql:
 
 
 
-{%- set adminer_pillar = pillar.get('adminer', {}) -%}
-{%- set connections = adminer_pillar.get('connections', {}) -%}
+{% set adminer_pillar = pillar.get('adminer', {}) %}
+{% set connections = adminer_pillar.get('connections', {}) %}
 
 
 
