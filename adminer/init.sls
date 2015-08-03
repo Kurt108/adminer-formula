@@ -38,7 +38,7 @@ include:
 {{ defaults.base_dst }}:
   file.directory:
     - name: {{ defaults.base_dst }}/
-    - user: {{ defaultsuser }}
+    - user: {{ defaults.user }}
 
 
 adminer-4.2.1-mysql.php:
