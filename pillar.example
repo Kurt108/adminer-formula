@@ -3,8 +3,10 @@ adminer:
   user: "www-data"
   connections:
     managed:
-      diamantweg-buddhismus:
+      database-one:
         config:
           - name: database for project x
             db_host: '127.0.0.1'
-            db_name: 'dwb'
+            db_name: 'my_database'
+            db_user: 'bubedamekoenig'
+            db_pass: 'fdygfdfdsfls3er23r45'
