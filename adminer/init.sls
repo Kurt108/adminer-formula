@@ -97,7 +97,7 @@ index.php:
   file.managed:
     {{ print_file(identifier, key) }}
     - require:
-        - file: {{ adminer.base_dst }}
+        - file: {{ defaults.base_dst }}
     - context:
         adminer: {{ connections }}
     {%- else %}
