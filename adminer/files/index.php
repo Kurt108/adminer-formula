@@ -7,7 +7,7 @@
 {%- endmacro -%}
 
 {%- for identifier,keys in connections.iteritems() -%}
-  {%- for key in keys -%}
+  {% for key in keys %}
     {% if 'present' in key %}
 <li><a href="{{ print_name(identifier, key) }}-adminer.php?username={{ key['db_user'] }}">open adminer {{ print_name(identifier, key) }} (database: {{ key['db_name'] }} as user {{ key['db_user'] }})</a></li>
     {% endif %}
