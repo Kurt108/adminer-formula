@@ -41,17 +41,6 @@ include:
     - user: {{ adminer.user }}
 
 
-index.php:
-  file.managed:
-    - name: {{ adminer.base_dst }}/index.php
-    - source: salt://adminer/files/index.php
-    - user: {{ adminer.user }}
-    - require:
-      - file: {{ adminer.base_dst }}
-    - template: jinja
-    - context:
-        adminer: {{ connections }}
-
 adminer-4.2.1-mysql.php:
   file.managed:
     - name: {{ adminer.base_dst }}/adminer-4.2.1-mysql.php
@@ -83,6 +72,23 @@ adminer.sql:
 
 {%- set adminer_pillar = pillar.get('adminer', {}) -%}
 {%- set connections = adminer_pillar.get('connections', {}) -%}
+
+
+
+index.php:
+  file.managed:
+    - name: {{ adminer.base_dst }}/index.php
+    - source: salt://adminer/files/index.php
+    - user: {{ adminer.user }}
+    - require:
+      - file: {{ adminer.base_dst }}
+    - template: jinja
+    - context:
+        adminer: {{ connections }}
+
+
+
+
 
 {%- for identifier,keys in connections.iteritems() -%}
   {%- for key in keys -%}
