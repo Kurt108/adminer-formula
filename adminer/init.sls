@@ -10,9 +10,9 @@
 
 {%- macro print_file(identifier, key) -%}
       {%- if 'name' in key  %}
-    - name: {{ key['name'] }}-adminer.php
+    - name: {{ defaults.base_dst }}/{{ key['name'] }}-adminer.php
       {%- else %}
-    - name: {{ identifier }}-adminer.php
+    - name: {{ defaults.base_dst }}/{{ identifier }}-adminer.php
       {%- endif %}
       {%- if 'present' in key %}
     - user: {{ defaults.user }}
@@ -39,7 +39,7 @@ include:
 
 {{ defaults.base_dst }}:
   file.directory:
-    - name: {{ defaults.base_dst }}/
+    - name: {{ defaults.base_dst }}
     - user: {{ defaults.user }}
 
 
