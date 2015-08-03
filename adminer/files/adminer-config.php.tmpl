@@ -33,7 +33,7 @@ function adminer_object() {
 		 * @return string
 		 */
 		function name() {
-			return '{{ connection.name }} as user {{ connection.db_user }}';
+			return '{{ connection.name }} as user {{ connection.db_user }} on database {{ connection.db_name }}';
 		}
 
 		/**
