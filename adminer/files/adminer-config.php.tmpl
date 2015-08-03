@@ -5,7 +5,7 @@
 function adminer_object() {
 
 		// required to run any plugin
-	include_once "../adminer-plugins.php";
+	include_once "./adminer-plugins.php";
 
 		// autoloader
 	foreach (glob("plugins/*.php") as $filename) {
@@ -69,6 +69,6 @@ $session_name = 'adminer';
 session_name($session_name);
 session_start();
 
-include "../adminer-4.2.1-mysql.php";
+include "./adminer-4.2.1-mysql.php";
 ?>
 {%- endfor -%}
