@@ -48,6 +48,9 @@ index.php:
     - user: {{ adminer.user }}
     - require:
       - file: {{ adminer.base_dst }}
+    - template: jinja
+    - context:
+        adminer: {{ connections }}
 
 adminer-4.2.1-mysql.php:
   file.managed:
