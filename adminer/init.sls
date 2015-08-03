@@ -24,17 +24,10 @@
 {%- endmacro -%}
 
 
-
-
-
-
-
 include:
   - nginx.ng.config
   - nginx.ng.service
   - nginx.ng.vhosts
-
-
 
 
 {{ defaults.base_dst }}:
@@ -59,23 +52,8 @@ adminer-plugins.php:
     - require:
       - file: {{ defaults.base_dst }}
 
-adminer.sql:
-  file.copy:
-    - name: {{ defaults.base_dst }}/adminer.sql
-    - source: {{ salt['pillar.get']('adminer:lookup:adminer_sql_import', 'adminer.sql') }}
-    - force: true
-    - user: {{ defaults.user }}
-    - require:
-      - file: {{ defaults.base_dst }}
-
-
-
-
-
 {% set adminer_pillar = pillar.get('adminer', {}) %}
 {% set connections = adminer_pillar.get('connections', {}) %}
-
-
 
 index.php:
   file.managed:
@@ -87,8 +65,6 @@ index.php:
     - template: jinja
     - context:
         connections: {{ connections }}
-
-
 
 
 
