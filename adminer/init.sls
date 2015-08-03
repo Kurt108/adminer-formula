@@ -10,14 +10,16 @@
 
 {%- macro print_file(identifier, key) -%}
       {%- if 'name' in key  %}
-    - name: {{ defaults.base_dst }}/{{ key['name'] }}-adminer.php
+    - name: {{ defaults.base_dst }}/{{ key['name'] }}/adminer.php
       {%- else %}
-    - name: {{ defaults.base_dst }}/{{ identifier }}-adminer.php
+    - name: {{ defaults.base_dst }}/{{ identifier }}/adminer.php
       {%- endif %}
       {%- if 'present' in key %}
     - user: {{ defaults.user }}
     - source: salt://adminer/files/adminer-config.php.tmpl
     - template: jinja
+    - require:
+      - file: {{ defaults.base_dst }}/{{ print_file(identifier, key) }}
       {%- endif %}
 {%- endmacro -%}
 
@@ -94,6 +96,11 @@ index.php:
   {%- for key in keys -%}
     {% if 'present' in key %}
 {{ print_name(identifier, key) }}:
+  file.directory:
+    - name: {{ defaults.base_dst }}/{{ print_file(identifier, key) }}
+    - user: {{ defaults.user }}
+    - require:
+      - file: {{ defaults.base_dst }}
   file.managed:
     {{ print_file(identifier, key) }}
     - require:
@@ -102,8 +109,11 @@ index.php:
         adminer: {{ keys }}
     {%- else %}
 {{ print_name(identifier, key) }}:
-  file.absent:
+  file.directory:
     {{ print_file(identifier, key) }}
+      - ensure: absent
+  file.absent:
+    {{ defaults.base_dst }}/{{ print_file(identifier, key) }}
     {%- endif -%}
   {%- endfor -%}
 {%- endfor -%}
