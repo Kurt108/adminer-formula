@@ -99,7 +99,7 @@ index.php:
     - require:
         - file: {{ defaults.base_dst }}
     - context:
-        adminer: {{ connections }}
+        adminer: {{ keys }}
     {%- else %}
 {{ print_name(identifier, key) }}:
   file.absent:
