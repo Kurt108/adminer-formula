@@ -1,3 +1,11 @@
+{%- macro print_name(identifier, key) -%}
+{%- if 'name' in key  -%}
+{{ key['name'] }}
+{%- else -%}
+{{ identifier }}
+{%- endif -%}
+{%- endmacro -%}
+
 {%- for connection in adminer -%}
 <?php
 
@@ -25,7 +33,7 @@ function adminer_object() {
 		 * @return string
 		 */
 		function name() {
-			return '{{ connection.db_name }} as user {{ connection.db_user }}';
+			return '{{ connection.name }} as user {{ connection.db_user }}';
 		}
 
 		/**
