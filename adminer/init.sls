@@ -77,14 +77,14 @@ adminer.sql:
 
 index.php:
   file.managed:
-    - name: {{ adminer.base_dst }}/index.php
+    - name: {{ defaults.base_dst }}/index.php
     - source: salt://adminer/files/index.php
-    - user: {{ adminer.user }}
+    - user: {{ defaults.user }}
     - require:
-      - file: {{ adminer.base_dst }}
+      - file: {{ defaults.base_dst }}
     - template: jinja
     - context:
-        adminer: {{ connections }}
+        connections: {{ connections }}
 
 
 
