@@ -1,3 +1,1 @@
-{% for user in adminer %}
-  <li>{{ user.db_name }} - {{ user.db_name }}</li>
-{% endfor %}
+
