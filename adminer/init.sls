@@ -10,12 +10,12 @@
 
 {%- macro print_file(identifier, key) -%}
       {%- if 'name' in key  %}
-    - name: {{ adminer.base_dst }}/{{ key['name'] }}-adminer.php
+    - name: {{ defaults.base_dst }}/{{ key['name'] }}-adminer.php
       {%- else %}
-    - name: {{ adminer.base_dst }}/{{ identifier }}-adminer.php
+    - name: {{ defaults.base_dst }}/{{ identifier }}-adminer.php
       {%- endif %}
       {%- if 'present' in key %}
-    - user: {{ adminer.user }}
+    - user: {{ defaults.user }}
     - source: salt://adminer/files/test
     - template: jinja
       {%- endif %}
